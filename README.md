@@ -75,7 +75,7 @@ A **room-based casino platform** on **Solana** where friends can create rooms, b
 ---
 
 ## 🏗️ Architecture
-![Architecture Diagram](frontend/public/architecture.png)
+![Architecture Diagram](frontend/public/Casino.png)
 
 ## Video tutorial
 https://www.loom.com/share/676231fa51204a40b3ba049b83bd7495?sid=1536f6d5-5c46-488e-b4a9-a8926ca642a4
