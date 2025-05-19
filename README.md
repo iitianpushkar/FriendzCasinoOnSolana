@@ -1,4 +1,4 @@
-# 🎰 FriendzCasino
+# 🎰 FriendzCasinoOnSolana
 
 A **room-based casino platform** on **Solana** where friends can create rooms, bet together, and play fun on-chain games like Mines!
 
@@ -10,7 +10,7 @@ A **room-based casino platform** on **Solana** where friends can create rooms, b
 
 - **Frontend**: [Next.js](https://nextjs.org/) ⚛️
 - **Server**: Node.js 🟢
-- **Blockchain**: [Solana](via Anchor Framework)
+- **Blockchain**: Solana
 
 ---
 
@@ -30,13 +30,32 @@ A **room-based casino platform** on **Solana** where friends can create rooms, b
 
 ### 🧑‍🤝‍🧑 Social, Transparent, Decentralized Gambling
 
-FriendzCasino offers a new model for online gambling:
+FriendzCasinoOnSolana offers a new model for online gambling:
 
 - 🎯 **Room-based multiplayer games** where friends can bet and play together.
 - 🔐 **Smart contracts enforce fairness** — no centralized control over outcomes or funds.
 - 🎲 **Commit-reveal randomness** ensures that no one can tamper with the result.
 - 💬 **Collaborative gameplay** builds trust and fun through shared experiences.
 - 🌍 **On-chain integrity** guarantees transparency, immutability, and fairness in every game.
+
+---
+
+## 🧬 What Makes FriendzCasinoOnSolana Unique?
+
+Unlike most casino platforms or even Web3 games, **FriendzCasinoOnSolana is built entirely on-chain**.
+
+### 💯 100% On-Chain Multiplayer Experience
+
+- 🏗️ **Room creation, joining, and player management** all happen via Solana smart contracts.
+- 🧑‍🤝‍🧑 No off-chain matchmaking or session tracking — the **blockchain itself is the game server**.
+- 🚫 No WebSockets or centralized state sync — game state and interactions are updated and retrieved entirely through **on-chain transactions and events**.
+
+### ✅ Why This Matters
+
+- **Transparency**: Every player action and game event is recorded on-chain for public verification.
+- **Trustless Play**: You don't have to trust any backend server — the smart contract *is* the backend.
+- **No Middlemen**: Even multiplayer coordination (room IDs, player counts, turns) is handled trustlessly.
+- **Auditable Gameplay**: Anyone can replay or verify games by scanning the chain.
 
 ---
 
