@@ -82,7 +82,7 @@ export default function RoomMines() {
   
 
   useEffect(() => {
-    if (!program) return;
+    if (!program || !publicKey) return;
   
     const listeners: number[] = [];
   
@@ -95,7 +95,7 @@ export default function RoomMines() {
         }
       })
       const betListener = await program.addEventListener("BetEvent", async (event) => {
-        if (event.player.toString() == publicKey?.toString()) {
+        if (event.player.toString() == publicKey.toString()) {
           setMessage(`You betted`);
         } 
         if (event.roomId == roomId) {
@@ -105,7 +105,7 @@ export default function RoomMines() {
 
       const submitListener = await program.addEventListener("PlayerCellsEvent", async (event) => {
 
-        if(event.player.toString() == publicKey?.toString()) {
+        if(event.player.toString() == publicKey.toString()) {
           setMessage(`You submitted cells.`);
           await fetchRoomData();
         }
@@ -122,7 +122,7 @@ export default function RoomMines() {
       });
 
       const scoreListener = await program.addEventListener("ScoreEvent", (event) => {
-        if(event.player.toString() == publicKey?.toString()) {
+        if(event.player.toString() == publicKey.toString()) {
           fetchRoomData();
           console.log(`🏆Your score: ${event.score}`);
           setYourScore(event.score);

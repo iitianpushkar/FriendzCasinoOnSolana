@@ -24,10 +24,10 @@ interface RoomModalProps {
     const publicKey = wallet?.publicKey;
 
     useEffect(() => {
-      if (!program) return;
+      if (!program || !publicKey) return;
     
         const roomListener = program.addEventListener("RoomCreatedEvent", async (event) => {
-          if(event.leader.toString() == publicKey?.toString()){
+          if(event.leader.toString() == publicKey.toString()){
             console.log("Room created successfully from event listener");
             toast.success(`Room created`, {
               icon: '🎉',

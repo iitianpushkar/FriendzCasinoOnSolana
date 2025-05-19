@@ -24,10 +24,10 @@ function JoinRoomModal({joinMinesModal,setjoinMinesModal}: RoomModalProps) {
   const [roomId, setRoomId] = useState("");
 
     useEffect(() => {
-      if (!program) return;
+      if (!program || !publicKey) return;
     
-        const joinListener = program.addEventListener("PlayerJoinedEvent", async (event) => {
-          if(event.leader.toString() == publicKey?.toString()){
+         program.addEventListener("PlayerJoinedEvent", async (event) => {
+          if(event.player.toString() == publicKey.toString()){
             console.log("Room joined successfully");
             toast.success(`Room joined`, {
               icon: '🎉',
@@ -35,12 +35,6 @@ function JoinRoomModal({joinMinesModal,setjoinMinesModal}: RoomModalProps) {
           }
   
         });
-
-      return () => {
-        if (program) {
-          program.removeEventListener(joinListener);
-        }
-      }
     }, [program,publicKey]);
 
   
@@ -65,6 +59,7 @@ function JoinRoomModal({joinMinesModal,setjoinMinesModal}: RoomModalProps) {
                 user: publicKey,
             })
             .rpc();
+            
         setjoinMinesModal(false);
         router.push(`/Games/mines/${roomId}`);
     } catch (err) {
