@@ -14,6 +14,32 @@ A **room-based casino platform** on **Solana** where friends can create rooms, b
 
 ---
 
+## ❗ Problem
+
+### 🧍‍♂️ Gambling is lonely and centralized
+
+1. Popular platforms like **Stake** only let users play against the house.
+2. There’s no way to play casino games **directly with friends**.
+3. The **entire game logic and randomness** are controlled by a centralized backend.
+
+### 🔍 Lack of transparency and control
+
+---
+
+## 🌟 Vision (Solution)
+
+### 🧑‍🤝‍🧑 Social, Transparent, Decentralized Gambling
+
+FriendzCasino offers a new model for online gambling:
+
+- 🎯 **Room-based multiplayer games** where friends can bet and play together.
+- 🔐 **Smart contracts enforce fairness** — no centralized control over outcomes or funds.
+- 🎲 **Commit-reveal randomness** ensures that no one can tamper with the result.
+- 💬 **Collaborative gameplay** builds trust and fun through shared experiences.
+- 🌍 **On-chain integrity** guarantees transparency, immutability, and fairness in every game.
+
+---
+
 ## 🎮 Available Game: Mines
 
 ### 💡 Game Flow
