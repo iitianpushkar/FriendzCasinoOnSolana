@@ -1,0 +1,627 @@
+{
+    "version": "0.1.0",
+    "name": "minesweeper",
+    "instructions": [
+        {
+            "name": "createRoom",
+            "accounts": [
+                {
+                    "name": "room",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "roomId",
+                    "type": "string"
+                },
+                {
+                    "name": "betAmount",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "joinRoom",
+            "accounts": [
+                {
+                    "name": "room",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "bet",
+            "accounts": [
+                {
+                    "name": "room",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "startGame",
+            "accounts": [
+                {
+                    "name": "room",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "mines",
+                    "type": "u8"
+                },
+                {
+                    "name": "gems",
+                    "type": "u8"
+                }
+            ]
+        },
+        {
+            "name": "commitMineHash",
+            "accounts": [
+                {
+                    "name": "room",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "hash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "cellsChosen",
+            "accounts": [
+                {
+                    "name": "room",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "choices",
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "revealMines",
+            "accounts": [
+                {
+                    "name": "room",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "submitMines",
+            "accounts": [
+                {
+                    "name": "room",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "revealed",
+                    "type": "bytes"
+                }
+            ]
+        }
+    ],
+    "accounts": [
+        {
+            "name": "Room",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "leader",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "exists",
+                        "type": "bool"
+                    },
+                    {
+                        "name": "mines",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "gems",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "betAmount",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "started",
+                        "type": "bool"
+                    },
+                    {
+                        "name": "minesRevealed",
+                        "type": "bool"
+                    },
+                    {
+                        "name": "committedMineHash",
+                        "type": {
+                            "array": [
+                                "u8",
+                                32
+                            ]
+                        }
+                    },
+                    {
+                        "name": "joined",
+                        "type": {
+                            "vec": "publicKey"
+                        }
+                    },
+                    {
+                        "name": "active",
+                        "type": {
+                            "vec": "publicKey"
+                        }
+                    },
+                    {
+                        "name": "totalBet",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "players",
+                        "type": {
+                            "vec": {
+                                "defined": "PlayerState"
+                            }
+                        }
+                    },
+                    {
+                        "name": "roomId",
+                        "type": "string"
+                    },
+                    {
+                        "name": "bump",
+                        "type": "u8"
+                    }
+                ]
+            }
+        }
+    ],
+    "types": [
+        {
+            "name": "PlayerState",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "player",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "score",
+                        "type": "u8"
+                    },
+                    {
+                        "name": "clicked",
+                        "type": "bytes"
+                    },
+                    {
+                        "name": "active",
+                        "type": "bool"
+                    }
+                ]
+            }
+        }
+    ],
+    "events": [
+        {
+            "name": "RoomCreatedEvent",
+            "fields": [
+                {
+                    "name": "roomId",
+                    "type": "string",
+                    "index": false
+                },
+                {
+                    "name": "leader",
+                    "type": "publicKey",
+                    "index": false
+                },
+                {
+                    "name": "betAmount",
+                    "type": "u64",
+                    "index": false
+                }
+            ]
+        },
+        {
+            "name": "PlayerJoinedEvent",
+            "fields": [
+                {
+                    "name": "roomId",
+                    "type": "string",
+                    "index": false
+                },
+                {
+                    "name": "player",
+                    "type": "publicKey",
+                    "index": false
+                }
+            ]
+        },
+        {
+            "name": "BetEvent",
+            "fields": [
+                {
+                    "name": "roomId",
+                    "type": "string",
+                    "index": false
+                },
+                {
+                    "name": "player",
+                    "type": "publicKey",
+                    "index": false
+                }
+            ]
+        },
+        {
+            "name": "GameStartedEvent",
+            "fields": [
+                {
+                    "name": "roomId",
+                    "type": "string",
+                    "index": false
+                },
+                {
+                    "name": "leader",
+                    "type": "publicKey",
+                    "index": false
+                },
+                {
+                    "name": "mines",
+                    "type": "u8",
+                    "index": false
+                },
+                {
+                    "name": "gems",
+                    "type": "u8",
+                    "index": false
+                },
+                {
+                    "name": "totalBet",
+                    "type": "u64",
+                    "index": false
+                }
+            ]
+        },
+        {
+            "name": "MineHashCommittedEvent",
+            "fields": [
+                {
+                    "name": "roomId",
+                    "type": "string",
+                    "index": false
+                },
+                {
+                    "name": "committedHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    },
+                    "index": false
+                }
+            ]
+        },
+        {
+            "name": "PlayerCellsEvent",
+            "fields": [
+                {
+                    "name": "roomId",
+                    "type": "string",
+                    "index": false
+                },
+                {
+                    "name": "player",
+                    "type": "publicKey",
+                    "index": false
+                },
+                {
+                    "name": "chosenCells",
+                    "type": "bytes",
+                    "index": false
+                }
+            ]
+        },
+        {
+            "name": "MineRevealEvent",
+            "fields": [
+                {
+                    "name": "roomId",
+                    "type": "string",
+                    "index": false
+                }
+            ]
+        },
+        {
+            "name": "ScoreEvent",
+            "fields": [
+                {
+                    "name": "roomId",
+                    "type": "string",
+                    "index": false
+                },
+                {
+                    "name": "player",
+                    "type": "publicKey",
+                    "index": false
+                },
+                {
+                    "name": "score",
+                    "type": "u8",
+                    "index": false
+                }
+            ]
+        },
+        {
+            "name": "HashMismatchEvent",
+            "fields": [
+                {
+                    "name": "roomId",
+                    "type": "string",
+                    "index": false
+                },
+                {
+                    "name": "submittedHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    },
+                    "index": false
+                },
+                {
+                    "name": "expectedHash",
+                    "type": {
+                        "array": [
+                            "u8",
+                            32
+                        ]
+                    },
+                    "index": false
+                }
+            ]
+        },
+        {
+            "name": "GameOverEvent",
+            "fields": [
+                {
+                    "name": "roomId",
+                    "type": "string",
+                    "index": false
+                },
+                {
+                    "name": "winners",
+                    "type": {
+                        "vec": "publicKey"
+                    },
+                    "index": false
+                },
+                {
+                    "name": "score",
+                    "type": "u8",
+                    "index": false
+                }
+            ]
+        },
+        {
+            "name": "MinePositionEvent",
+            "fields": [
+                {
+                    "name": "roomId",
+                    "type": "string",
+                    "index": false
+                },
+                {
+                    "name": "revealedMines",
+                    "type": "bytes",
+                    "index": false
+                }
+            ]
+        }
+    ],
+    "errors": [
+        {
+            "code": 6000,
+            "name": "RoomAlreadyExists"
+        },
+        {
+            "code": 6001,
+            "name": "RoomNotFound",
+            "msg": "Room not found"
+        },
+        {
+            "code": 6002,
+            "name": "InvalidBetAmount",
+            "msg": "Bet amount must be > 0"
+        },
+        {
+            "code": 6003,
+            "name": "RoomFull",
+            "msg": "Room full"
+        },
+        {
+            "code": 6004,
+            "name": "GameAlreadyStarted",
+            "msg": "Game already started"
+        },
+        {
+            "code": 6005,
+            "name": "NotInRoom",
+            "msg": "Not in room"
+        },
+        {
+            "code": 6006,
+            "name": "AlreadyBetted",
+            "msg": "Already betted"
+        },
+        {
+            "code": 6007,
+            "name": "Unauthorized",
+            "msg": "Unauthorized"
+        },
+        {
+            "code": 6008,
+            "name": "InsufficientBet",
+            "msg": "Insufficient bet lamports"
+        },
+        {
+            "code": 6009,
+            "name": "MinMines",
+            "msg": "Must have >=3 mines"
+        },
+        {
+            "code": 6010,
+            "name": "MinGems",
+            "msg": "Must have >=5 gems"
+        },
+        {
+            "code": 6011,
+            "name": "NoActivePlayers",
+            "msg": "No active players"
+        },
+        {
+            "code": 6012,
+            "name": "GameNotStarted",
+            "msg": "Game not started"
+        },
+        {
+            "code": 6013,
+            "name": "AlreadyCommitted",
+            "msg": "Already committed"
+        },
+        {
+            "code": 6014,
+            "name": "HashNotCommitted",
+            "msg": "Hash not committed"
+        },
+        {
+            "code": 6015,
+            "name": "IncorrectGems",
+            "msg": "Incorrect gems count"
+        },
+        {
+            "code": 6016,
+            "name": "AlreadyChosen",
+            "msg": "Already chosen cells"
+        },
+        {
+            "code": 6017,
+            "name": "InvalidCell",
+            "msg": "Invalid cell index"
+        },
+        {
+            "code": 6018,
+            "name": "DuplicateCell",
+            "msg": "Duplicate cells"
+        },
+        {
+            "code": 6019,
+            "name": "WaitingPlayers",
+            "msg": "Waiting for other players"
+        },
+        {
+            "code": 6020,
+            "name": "AlreadyRevealed",
+            "msg": "Already revealed"
+        },
+        {
+            "code": 6021,
+            "name": "WrongMineCount",
+            "msg": "Wrong mine count"
+        },
+        {
+            "code": 6022,
+            "name": "MustBet",
+            "msg": "Must Bet first"
+        },
+        {
+            "code": 6023,
+            "name": "InvalidOwnerPubkey",
+            "msg": "Invalid owner pubkey"
+        }
+    ]
+}
