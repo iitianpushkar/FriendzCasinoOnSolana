@@ -120,7 +120,7 @@ Unlike most casino platforms or even Web3 games, **FriendzCasinoOnSolana is buil
 ---
 
 ## 🏗️ Architecture
-![Architecture Diagram](frontend/public/Casino.png)
+![Architecture Diagram](frontend/public/Casino1.png)
 
 ## Video tutorial
 https://www.loom.com/share/676231fa51204a40b3ba049b83bd7495?sid=1536f6d5-5c46-488e-b4a9-a8926ca642a4
